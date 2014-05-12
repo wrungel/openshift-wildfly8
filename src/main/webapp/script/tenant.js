@@ -35,6 +35,11 @@ app.controller('tenantsList', function ($scope, $http) {
     $scope.gridOptions = {
         data: 'tenants.list',
         useExternalSorting: true,
-        sortInfo: $scope.sortInfo
+        sortInfo: $scope.sortInfo,
+        columnDefs: [
+            {field:'lastName', displayName:'Last name'},
+            {field:'firstName', displayName:'First name'}
+        ]
+
     };
 });
