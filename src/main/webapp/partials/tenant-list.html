@@ -1,0 +1,13 @@
+<div class="grid">
+    <!-- Specify a JavaScript controller script that binds Javascript variables to the HTML.-->
+    <div ng-controller="tenantsController">
+        <!-- Binds the grid component to be displayed. -->
+        <div class="gridStyle" ng-grid="gridOptions"></div>
+
+        <!--  Bind the pagination component to be displayed. -->
+        <pagination direction-links="true" boundary-links="true"
+                    total-items="tenants.totalResults" page="tenants.currentPage" items-per-page="tenants.pageSize"
+                    on-select-page="refreshGrid(page)">
+        </pagination>
+    </div>
+</div>

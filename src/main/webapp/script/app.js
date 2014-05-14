@@ -1,6 +1,34 @@
-var app = angular.module('tenants', ['ngGrid', 'ui.bootstrap']);
-// Create a controller with name tenantsList to bind to the html page.
-app.controller('tenantsList', function ($scope, $http) {
+var app = angular.module('rentApp', ['ngRoute', 'ngGrid', 'ui.bootstrap']);
+
+app.controller('newTenantController',
+function newTenantController($scope, $http) {
+
+
+    // Form submit handler.
+    $scope.submit = function(form) {
+        // Trigger validation flag.
+        $scope.submitted = true;
+        // If form is invalid, return and let AngularJS show validation errors.
+        if (form.$invalid) {
+            return;
+        }
+        $http({
+                    url: 'resources/new_tenant',
+                    method: 'POST',
+                    params: {
+                        firstName: $scope.firstName,
+                        sortFields: $scope.lastName
+                    }
+                }).success(function (data) {
+
+                })}
+       });
+
+
+
+
+app.controller('tenantsController',
+function tenantsController($scope, $http) {
     // Makes the REST request to get the data to populate the grid.
     $scope.refreshGrid = function (page) {
         $http({
@@ -43,3 +71,28 @@ app.controller('tenantsList', function ($scope, $http) {
 
     };
 });
+
+app.config(['$routeProvider',
+  function($routeProvider) {
+    $routeProvider.
+      when('/tenants', {
+        templateUrl: 'partials/tenant-list.html',
+        controller: 'tenantsController'
+      }).
+       when('/new-tenant', {
+              templateUrl: 'partials/new-tenant.html',
+              controller: 'newTenantController'
+            }).
+      otherwise({
+        redirectTo: '/tenants'
+      });
+  }]);
+
+
+function HeaderController($scope, $location)
+{
+      $scope.isActive = function (viewLocation) {
+          return viewLocation === $location.path();
+      };
+}
+
